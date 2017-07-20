@@ -9,18 +9,5 @@
 $product = $block->getProduct();
 ?>
 <?php if ($product->isSaleable() && $block->hasOptions()):?>
-      <div data-role="clara-panelControl" id="clara-panelControl"></div>
-      <script type="text/x-magento-init">
-        {
-          "[data-role=clara-panelControl]": {
-            "js/clara-configurator": {
-              "optionConfig": <?php /* @escapeNotVerified */ echo $block->getJsonConfig()?>,
-              "claraUUID": <?php echo json_encode($product->getResource()->getAttribute('clarauuid')->getFrontend()->getValue($product))?>
-            }
-          }
-        }
-      </script>
-      <div id="clara-form-configurations-wrapper"></div>
+  <li><iframe src="https://weevers.mythreekit.com" width="600" height="400" scrolling="yes" style=" margin-top:-4px; margin-left:-4px; border:none;"></iframe></li>
 <?php endif;?>
-
-

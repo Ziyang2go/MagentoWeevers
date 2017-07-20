@@ -14,9 +14,8 @@ define([
   'jquery/ui',
   'jquery/jquery.parsequery',
   'mage/validation/validation'
-], function($, _, mageTemplate,  keyboardHandler, $t, priceUtils, claraPlayer) {
+], function($, _, mageTemplate,  keyboardHandler, $t, priceUtils, claraPlayer, ) {
   'use strict';
-
   $.widget('clara.Configurator', {
     options: {
       optionConfig: null,

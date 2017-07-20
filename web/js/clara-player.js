@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-define([
+require([
   'jquery',
   'claraplayer',
   'jquery/ui',
@@ -14,10 +14,10 @@ define([
     },
 
     _init: function () {
-
     },
 
     _create: function () {
+      window.player = claraPlayer;
       /*
       var clara = claraPlayer('clara-player');
       clara.on('loaded', function() {

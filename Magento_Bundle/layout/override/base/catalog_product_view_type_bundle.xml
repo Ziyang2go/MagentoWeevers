@@ -9,11 +9,10 @@
   <body>
     <attribute name="class" value="page-product-bundle"/>
     <referenceContainer name="content">
+      <block class="Magento\Framework\View\Element\Template" name="product.main" template="Exocortex_ClaraPlayer::ClaraPlayer.phtml" before="product.info.media"/>
       <referenceContainer name="product.info.main" remove="true"/>
-
       <referenceContainer name="product.info.media">
         <referenceBlock name="product.info.media.image" remove="true"/>
-        <block class="Magento\Framework\View\Element\Template" name="product.info.media.claraPlayer" template="Exocortex_ClaraPlayer::ClaraPlayer.phtml"/>
       </referenceContainer>
 
       <container name="product.info.clara" htmlTag="div" htmlClass="product-info-main" before="product.info.details">
@@ -34,3 +33,4 @@
     </referenceContainer>
   </body>
 </page>
+

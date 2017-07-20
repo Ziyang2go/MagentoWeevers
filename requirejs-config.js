@@ -1,10 +1,13 @@
 var config = {
     paths: {
-        "claraplayer":  "https://clara.io/js/claraplayer.min"
+        "claraplayer":  "https://clara.io/js/claraplayer.min",
     },
     shim: {
         "claraplayer": {
             exports: "claraplayer"
+        },
+        "weevers": {
+            exports: "weevers"
         }
     }
 };
