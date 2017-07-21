@@ -6,5 +6,10 @@ var config = {
     claraplayer: {
       exports: "claraplayer"
     }
+  },
+  map: {
+    "*": {
+      clara_player: "js/clara-player"
+    }
   }
 };

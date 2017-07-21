@@ -1,16 +1,28 @@
+<?php
+/**
+ * Copyright © Exocortex, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /** @var $block Magento\Bundle\Block\Catalog\Product\View\Type\Bundle */ ?>
+<?php
+$product = $block->getProduct();
+?>
+<?php if ($product->isSaleable() && $block->hasOptions()):?>
+  <head>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
+  </head>
 
-<head>
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
-</head>
-
-<div class="" data-role="clara-player" id="clara-player" style="height:500px">
-  <div id="root">
-</div>
-<script type="text/x-magento-init">
-  {
-    "[data-role=clara-player]": {
-      "js/clara-player": {
+  <div class="" data-role="clara-player" id="clara-player" style="height:500px">
+    <div id="root">
+  </div>
+  <script type="text/x-magento-init">
+    {
+      "[data-role=clara-player]": {
+        "js/clara-player": {
+          "optionConfig": <?php /* @escapeNotVerified */ echo $block->getJsonConfig()?>
+        }
       }
     }
-  }
-</script>
+  </script>
+<?php endif;?>

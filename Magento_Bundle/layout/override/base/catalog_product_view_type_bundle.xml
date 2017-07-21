@@ -12,7 +12,7 @@
   <body>
     <attribute name="class" value="page-product-bundle"/>
     <referenceContainer name="content">
-      <block class="Magento\Framework\View\Element\Template" name="product.main" template="Exocortex_ClaraPlayer::ClaraPlayer.phtml" before="product.info.media"/>
+      <block class="Magento\Bundle\Block\Catalog\Product\View\Type\Bundle" name="product.main" template="Exocortex_ClaraPlayer::ClaraPlayer.phtml" before="product.info.media"/>
       <referenceContainer name="product.info.main" remove="true"/>
       <referenceContainer name="product.info.media">
         <referenceBlock name="product.info.media.image" remove="true"/>

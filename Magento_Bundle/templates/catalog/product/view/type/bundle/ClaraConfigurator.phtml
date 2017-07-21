@@ -1,0 +1,13 @@
+<?php
+/**
+ * Copyright © Exocortex, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /** @var $block Magento\Bundle\Block\Catalog\Product\View\Type\Bundle */ ?>
+<?php
+$product = $block->getProduct();
+?>
+<?php if ($product->isSaleable() && $block->hasOptions()):?>
+      <div id="clara-form-configurations-wrapper"></div>
+<?php endif;?>
