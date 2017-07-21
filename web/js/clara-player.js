@@ -4,10 +4,10 @@
  */
 
 define(["jquery", "claraplayer", "jquery/ui"], function($, claraPlayer) {
-  window.$ = $;
   window.claraplayer = claraPlayer;
-  require(["js/main"]);
-
+  require(["js/main"], function() {
+    console.log("22222222222222");
+  });
   $.widget("clara.player", {
     options: {
       optionConfig: null
@@ -21,17 +21,21 @@ define(["jquery", "claraplayer", "jquery/ui"], function($, claraPlayer) {
 
     _create: function() {
       var self = this;
-      var options = [
-        { name: "Box Type", type: "Options", values: ["Standard", "Ellipse"] }
-      ];
-      this.configMap = this._mappingConfiguration(options, this.options.optionConfig);
-      this.configType = this._createConfigType(options);
-      this._createFormFields(this.options.optionConfig.options);
-      window.addEventListener("updateWeevers", function() {
-        const updateOptions = { "Box Type": "Standard" };
+      setTimeout(function() {
+        if (!window.weeversConfig) return;
+        var options = window.weeversConfig.boxConfiguration;
+        self.configMap = self._mappingConfiguration(
+          options,
+          self.options.optionConfig
+        );
+        self.configType = self._createConfigType(options);
+        self._createFormFields(self.options.optionConfig.options);
+        window.addEventListener("updateWeevers", function() {
+          const updateOptions = { "Box Type": window.weeversConfig.box.type };
 
-        self._updateFormFields(updateOptions, self.configMap, self.configType, []);
-      });
+          self._updateFormFields(updateOptions, self.configMap, self.configType, []);
+        });
+      }, 3000);
     },
 
     _createConfigType: function createConfigType(claraConfig) {
@@ -270,12 +274,14 @@ define(["jquery", "claraplayer", "jquery/ui"], function($, claraPlayer) {
       return map;
     },
 
-    _updateFormFields: function updateFormFields(config, map, configType, dimensions) {
+    _updateFormFields: function updateFormFields(
+      config,
+      map,
+      configType,
+      dimensions
+    ) {
       var volume = 1;
-      console.log(config);
-      console.log(map);
-      console.log(configType);
-      console.log(dimensions);
+      console.log(config)
       for (var attr in config) {
         if (map.has(attr)) {
           var attrId = map.get(attr).get("key");
@@ -348,6 +354,5 @@ define(["jquery", "claraplayer", "jquery/ui"], function($, claraPlayer) {
       //   .setAttribute("value", volume);
     }
   });
-
   return $.clara.player;
 });
