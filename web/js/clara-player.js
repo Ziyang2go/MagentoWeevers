@@ -5,9 +5,7 @@
 
 define(["jquery", "claraplayer", "jquery/ui"], function($, claraPlayer) {
   window.claraplayer = claraPlayer;
-  require(["js/main"], function() {
-    console.log("22222222222222");
-  });
+  require(["js/main"]);
   $.widget("clara.player", {
     options: {
       optionConfig: null
@@ -21,8 +19,7 @@ define(["jquery", "claraplayer", "jquery/ui"], function($, claraPlayer) {
 
     _create: function() {
       var self = this;
-      setTimeout(function() {
-        if (!window.weeversConfig) return;
+      this._findFile(function() {
         var options = window.weeversConfig.boxConfiguration;
         self.configMap = self._mappingConfiguration(
           options,
@@ -31,11 +28,31 @@ define(["jquery", "claraplayer", "jquery/ui"], function($, claraPlayer) {
         self.configType = self._createConfigType(options);
         self._createFormFields(self.options.optionConfig.options);
         window.addEventListener("updateWeevers", function() {
-          const updateOptions = { "Box Type": window.weeversConfig.box.type };
+          const boxConfig = window.weeversConfig.box;
+          const updateOptions = {
+            "Box Type": boxConfig.type,
+            "Box Length": boxConfig.scale.x,
+            "Box Width": boxConfig.scale.y,
+            "Box Depth": boxConfig.scale.z
+          };
 
-          self._updateFormFields(updateOptions, self.configMap, self.configType, []);
+          self._updateFormFields(
+            updateOptions,
+            self.configMap,
+            self.configType,
+            []
+          );
         });
-      }, 3000);
+      });
+    },
+
+    _findFile: function findFile(callback) {
+      if (window.weeversConfig) {
+        return callback();
+      }
+      setTimeout(function() {
+        findFile(callback);
+      }, 1000);
     },
 
     _createConfigType: function createConfigType(claraConfig) {
@@ -161,7 +178,6 @@ define(["jquery", "claraplayer", "jquery/ui"], function($, claraPlayer) {
         console.error("Auto mapping clara configuration with magento failed");
         return null;
       }
-      console.log(map);
       return map;
     },
 
@@ -281,7 +297,6 @@ define(["jquery", "claraplayer", "jquery/ui"], function($, claraPlayer) {
       dimensions
     ) {
       var volume = 1;
-      console.log(config)
       for (var attr in config) {
         if (map.has(attr)) {
           var attrId = map.get(attr).get("key");
