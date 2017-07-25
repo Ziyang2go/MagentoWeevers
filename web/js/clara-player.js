@@ -23,7 +23,7 @@ define(
 
       _create: function() {
         var self = this;
-        require(["weevers"], function() {
+        require(["js/main"], function() {
           //map configuration options with magento2 attributes
           var options = window.weeversConfig.boxConfiguration;
           self.configMap = self._mappingConfiguration(
