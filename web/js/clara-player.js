@@ -8,7 +8,6 @@ define(
   function($, claraPlayer, ui, customerData) {
     "use strict";
     window.claraplayer = claraPlayer;
-    require(["js/main"]);
 
     $.widget("clara.player", {
       options: {
@@ -24,7 +23,8 @@ define(
 
       _create: function() {
         var self = this;
-        this._findFile(function() {
+        require(["weevers"], function() {
+          //map configuration options with magento2 attributes
           var options = window.weeversConfig.boxConfiguration;
           self.configMap = self._mappingConfiguration(
             options,
@@ -32,6 +32,8 @@ define(
           );
           self.configType = self._createConfigType(options);
           self._createFormFields(self.options.optionConfig.options);
+
+          //Add event handler to update magento fields when configurations change
           window.addEventListener("updateWeevers", function() {
             const boxConfig = window.weeversConfig.box;
             const updateOptions = {
@@ -48,13 +50,15 @@ define(
               []
             );
           });
+
+          //Add event handler to post order to mythreekit when adding the product to cart.
           $("#product_addtocart_form").on("submit", function(e) {
             e.preventDefault();
             var self = this;
             const uri =
               "https://mythreekit.com/api/organizations/weevers/orders";
             const boxConfig = window.weeversConfig.box;
-            const customer = customerData.get('customer');
+            const customer = customerData.get("customer");
             const productInfo = {
               productId: "59763504976bd8000192866b",
               sceneId: "1baf8c9e-a49a-4136-a78f-055f9430a48b",
@@ -66,7 +70,7 @@ define(
               },
               customer: {
                 email: "annon@example.com",
-                name: customer() && customer().fullname || "no session"
+                name: (customer() && customer().fullname) || "no session"
               }
             };
             fetch(uri, {
@@ -79,16 +83,21 @@ define(
               $("#product_addtocart_form").unbind("submit").submit();
             });
           });
-        });
-      },
 
-      _findFile: function findFile(callback) {
-        if (window.weeversConfig) {
-          return callback();
-        }
-        setTimeout(function() {
-          findFile(callback);
-        }, 1000);
+          //update form with default configurations.
+          const defaultConfig = {
+            "Box Type": "Standard",
+            "Box Length": 80,
+            "Box Width": 60,
+            "Box Depth": 80
+          };
+          self._updateFormFields(
+            defaultConfig,
+            self.configMap,
+            self.configType,
+            []
+          );
+        });
       },
 
       _createConfigType: function createConfigType(claraConfig) {
@@ -419,3 +428,4 @@ define(
     return $.clara.player;
   }
 );
+
